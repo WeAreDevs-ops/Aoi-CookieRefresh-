@@ -1,0 +1,26 @@
+{
+  "name": "aoi-cookie-refresh",
+  "version": "1.0.0",
+  "description": "Roblox Cookie Refresh Application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "install-deps": "npm install"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "roblox",
+    "cookie",
+    "refresh",
+    "authentication"
+  ],
+  "author": "codepulze & james",
+  "license": "MIT"
+}
