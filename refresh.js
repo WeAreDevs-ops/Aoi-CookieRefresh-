@@ -72,15 +72,23 @@ async function redeemAuthTicket(authTicket) {
             throw new Error('No cookie data received from Roblox');
         }
 
-        const cookieMatch = refreshedCookieData.match(/(_\|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.\|_[A-Za-z0-9]+)/g);
+        // Extract the .ROBLOSECURITY cookie value from the Set-Cookie header
+        const roblosecurityMatch = refreshedCookieData.match(/\.ROBLOSECURITY=([^;]+)/);
         
-        if (!cookieMatch || cookieMatch.length === 0) {
+        if (!roblosecurityMatch || roblosecurityMatch.length < 2) {
             throw new Error('Failed to extract refreshed cookie from response');
+        }
+
+        const refreshedCookie = roblosecurityMatch[1];
+        
+        // Verify it's a valid Roblox cookie format
+        if (!refreshedCookie.includes('_|WARNING:-DO-NOT-SHARE-THIS')) {
+            throw new Error('Invalid refreshed cookie format received');
         }
 
         return {
             success: true,
-            refreshedCookie: cookieMatch.toString()
+            refreshedCookie: refreshedCookie
         };
     } catch (error) {
         console.error('Error redeeming auth ticket:', error.message);
