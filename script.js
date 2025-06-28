@@ -64,7 +64,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 method: "GET",
             })
                 .then(async (response) => {
-                    const data = await response.json();
+                    let data;
+                    const contentType = response.headers.get('content-type');
+                    
+                    // Check if response is JSON
+                    if (contentType && contentType.includes('application/json')) {
+                        try {
+                            data = await response.json();
+                        } catch (jsonError) {
+                            throw new Error('Server returned invalid JSON response');
+                        }
+                    } else {
+                        // If not JSON, get text content for debugging
+                        const textContent = await response.text();
+                        console.error('Non-JSON response received:', textContent);
+                        throw new Error('Server returned non-JSON response. Please check if the server is running correctly.');
+                    }
                     
                     if (!response.ok) {
                         throw new Error(data.error || `HTTP error! status: ${response.status}`);
