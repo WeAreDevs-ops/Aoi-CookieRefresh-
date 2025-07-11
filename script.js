@@ -1,8 +1,12 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const authCookieInput = document.getElementById("authCookie");
     const refreshButton = document.getElementById("refreshButton");
     const resultElement = document.getElementById("result");
     const countdownElement = document.getElementById("countdown");
+    const copyButton = document.getElementById("copyButton");
+    const spinner = document.getElementById("spinner");
+    const buttonText = document.getElementById("buttonText");
 
     // Input validation function
     function validateCookie(cookie) {
@@ -18,19 +22,31 @@ document.addEventListener("DOMContentLoaded", function () {
     // Show error message
     function showError(message) {
         resultElement.textContent = message;
-        resultElement.style.color = "#ff6b6b";
+        resultElement.className = "result-area error";
     }
 
     // Show success message
     function showSuccess(message) {
         resultElement.textContent = message;
-        resultElement.style.color = "#51cf66";
+        resultElement.className = "result-area success";
     }
 
     // Show info message
     function showInfo(message) {
         resultElement.textContent = message;
-        resultElement.style.color = "#74c0fc";
+        resultElement.className = "result-area";
+    }
+
+    // Set loading state
+    function setLoadingState(isLoading) {
+        refreshButton.disabled = isLoading;
+        if (isLoading) {
+            spinner.style.display = "inline-block";
+            buttonText.textContent = "Processing...";
+        } else {
+            spinner.style.display = "none";
+            buttonText.textContent = "Refresh Cookie";
+        }
     }
 
     refreshButton.addEventListener("click", function () {
@@ -43,15 +59,12 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        refreshButton.disabled = true;
-        const refreshButtonIcon = document.getElementById('refreshButtonIcon');
-        refreshButtonIcon.classList.add('rotate-icon');
+        setLoadingState(true);
+        showInfo("Generating your refreshed cookie...");
         
-        showInfo("Please wait, your cookie is generating...");
-        
-        let countdown = 7;
+        let countdown = 5;
         const countdownInterval = setInterval(function () {
-            countdownElement.textContent = `Refreshing in ${countdown} seconds...`;
+            countdownElement.textContent = `Processing... ${countdown}s`;
             countdown--;
             if (countdown < 0) {
                 clearInterval(countdownInterval);
@@ -67,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     let data;
                     const contentType = response.headers.get('content-type');
                     
-                    // Check if response is JSON
                     if (contentType && contentType.includes('application/json')) {
                         try {
                             data = await response.json();
@@ -75,10 +87,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             throw new Error('Server returned invalid JSON response');
                         }
                     } else {
-                        // If not JSON, get text content for debugging
                         const textContent = await response.text();
                         console.error('Non-JSON response received:', textContent);
-                        throw new Error('Server returned non-JSON response. Please check if the server is running correctly.');
+                        throw new Error('Server returned non-JSON response');
                     }
                     
                     if (!response.ok) {
@@ -99,15 +110,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     showError(error.message || "Error occurred while refreshing the cookie.");
                 })
                 .finally(() => {
-                    refreshButton.disabled = false;
-                    refreshButtonIcon.classList.remove('rotate-icon');
+                    setLoadingState(false);
+                    clearInterval(countdownInterval);
+                    countdownElement.textContent = "";
                 });
-        }, 7000);
+        }, 5000);
     });
 
-    const copyButton = document.getElementById("copyButton");
     copyButton.addEventListener("click", function () {
-        const resultText = document.getElementById("result").textContent;
+        const resultText = resultElement.textContent;
         
         // Check if there's a valid cookie to copy
         if (!resultText || !resultText.includes('_|WARNING:-DO-NOT-SHARE-THIS')) {
@@ -115,13 +126,21 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
         
-        // Use modern clipboard API if available, fallback to old method
+        // Use modern clipboard API
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(resultText).then(() => {
-                copyButton.textContent = "Copied!";
+                const originalText = copyButton.innerHTML;
+                copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyButton.style.background = '#48bb78';
+                copyButton.style.borderColor = '#48bb78';
+                copyButton.style.color = 'white';
+                
                 setTimeout(function () {
-                    copyButton.textContent = "Copy";
-                }, 1000);
+                    copyButton.innerHTML = originalText;
+                    copyButton.style.background = 'white';
+                    copyButton.style.borderColor = '#667eea';
+                    copyButton.style.color = '#667eea';
+                }, 2000);
             }).catch(() => {
                 showError("Failed to copy to clipboard");
             });
@@ -137,15 +156,32 @@ document.addEventListener("DOMContentLoaded", function () {
             
             try {
                 document.execCommand("copy");
-                copyButton.textContent = "Copied!";
+                const originalText = copyButton.innerHTML;
+                copyButton.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                copyButton.style.background = '#48bb78';
+                copyButton.style.borderColor = '#48bb78';
+                copyButton.style.color = 'white';
+                
                 setTimeout(function () {
-                    copyButton.textContent = "Copy";
-                }, 1000);
+                    copyButton.innerHTML = originalText;
+                    copyButton.style.background = 'white';
+                    copyButton.style.borderColor = '#667eea';
+                    copyButton.style.color = '#667eea';
+                }, 2000);
             } catch (err) {
                 showError("Failed to copy to clipboard");
             }
             
             document.body.removeChild(textarea);
         }
+    });
+
+    // Add input animation
+    authCookieInput.addEventListener("focus", function() {
+        this.parentElement.style.transform = "scale(1.02)";
+    });
+
+    authCookieInput.addEventListener("blur", function() {
+        this.parentElement.style.transform = "scale(1)";
     });
 });

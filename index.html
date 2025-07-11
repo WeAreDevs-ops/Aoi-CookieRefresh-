@@ -1,180 +1,265 @@
+
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-      <meta name="robots" content="index, follow">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta property="og:title" content="Roblox IP Lock Bypass">
-      <meta property="og:description" content="Website that bypasses IP Locks for Cookies!">
-      <meta name="keywords" content="Roblox IP restriction bypass, Unblock restricted IP on Roblox, Kshit cookie refresher, Bypass Roblox IP lock, Access blocked Roblox IP, Roblox IP unblocker, Overcoming Roblox IP restrictions, Roblox IP block bypass, Bypassing Roblox IP lock, Roblox IP restriction removal, Unlocking blocked Roblox IP, roblox, robux, roblox ip lock, roblox ip lock bypass, rbxfresh" >
-      <title>KSHIT Cookie Refresher</title>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-      <link rel="icon" href="logo.ico" type="image/x-icon">
-      <style>
-         /* Copyright Info */
-         #copyright {
-         font-size: 11px;
-         color: rgb(255, 255, 255);
-         transition: font-size 0.3s ease, color 0.3s ease; 
-         }
-         #copyright:hover {
-         font-size: 17px; 
-         color: rgb(138, 203, 247); 
-         }
-        /* Copyright Info */
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Cookie Refresher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* Background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-         body {
-         background: url('https://cdn.discordapp.com/attachments/1151159745621803049/1151860862961856593/background.jpg');
-         background-repeat: no-repeat;
-         background-size: cover;
-         background-color: #000;
-         color: #fff;
-         font-family: 'Montserrat', sans-serif;
-         width: 100%;
-         height: 100vh;
-         margin: 0;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         }
-         body::after {
-         content: '';
-         position: absolute;
-         top: 0;
-         left: 0;
-         width: 100%;
-         height: 100vh;
-         background: rgba(0, 0, 0, 0.79);
-         z-index: -2;
-         }
-         body::before {
-         content: '';
-         position: absolute;
-         top: 0;
-         left: 0;
-         width: 100%;
-         height: 100vh;
-         background: url('https://cdn.discordapp.com/attachments/1151481817048825888/1151578856579403817/bg-pattern.png');
-         z-index: -1;
-         animation: backgroundPanel_anim 1000s linear infinite;
-         }
-         @keyframes backgroundPanel_anim {
-         0% {
-         background-position-x: 0;
-         }
-         25%, 50%, 75% {
-         background-position-x: 3000px;
-         }
-         100% {
-         background-position-x: 0;
-         }
-         }
-        /* Background */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 100%;
+            animation: gradient 3s ease infinite;
+        }
 
-        /* Container & Result */
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
 
-         #container {
-         width: 400px; 
-         background: linear-gradient(to bottom, #333, #444);
-         padding: 20px; 
-         border-radius: 15px; 
-         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-         text-align: center;
-         position: relative;
-         color: #fff; 
-         font-size: 16px; 
-         line-height: 1.5; 
-         margin: 0 auto; 
-         }
-         #result {
-         background-color: #2c2f31;
-         padding: 10px;
-         margin-top: 10px;
-         white-space: nowrap; 
-         overflow-x: auto; 
-         }
-        /* Container & Result */
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
 
-        /* Buttons */
+        h1 {
+            color: #2d3748;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
 
-         .btn-purple {
-         background-color: purple;
-         color: #fff;
-         }
-         .btn-purple:hover {
-         background-color: #7b68ee;
-         }
-         #refreshButtonIcon {
-         width: 20px;
-         height: 20px;
-         margin-right: 5px;
-         }
-         /* Buttons */
+        .subtitle {
+            color: #718096;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
 
-         .app-discord-social {
-         position: absolute;
-         bottom: 10px; 
-         right: 10px; 
-         transform: scale(0.8); 
-         transition: transform 0.3s, color 0.3s; 
-         }
-         .app-discord-social i {
-         font-size: 26px; 
-         color: gray; 
-         }
-         .app-discord-social:hover {
-         transform: scale(1.1); 
-         }
-         .app-discord-social:hover i {
-         color: purple;
-         }
-         .rotate-icon {
-         animation: spin 2s linear infinite;
-         }
-         @keyframes spin {
-         0% { transform: rotate(0deg); }
-         100% { transform: rotate(360deg); }
-         }
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
 
-    #authCookie {
-        transition: border-color 0.3s ease-in-out;
-    }
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+            z-index: 1;
+        }
 
-    #authCookie:focus {
-        border-color: #530083; 
-        box-shadow: 0 0 5px rgba(123, 104, 238, 0.5); 
-    }
-      </style>
-   </head>
-   <body>
-      <div id="container" class="bg-dark">
-        <h3 class="text-center">
-            KSHIT Cookie Refresher
-            <img src="kshitlogo.jpg" alt="Logo" width="32" height="32" style="margin-right: 10px; border-radius: 50%;">
-        </h3>
-         <form id="cookieForm">
-            <input type="text" id="authCookie" class="form-control rounded bg-dark text-white mb-2" placeholder="Enter your .ROBLOSECURITY Cookie." required>
-            <button type="button" id="refreshButton" class="btn btn-purple btn-block">
-            <img id="refreshButtonIcon" src="https://cdn.discordapp.com/attachments/1151865698738520144/1152915992477962360/black-n-white-white-refresh-icon-png-clipart-removebg-preview.png" alt="Refresh Icon">
-            Refresh Cookie
+        input[type="text"] {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+        }
+
+        .refresh-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .refresh-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .refresh-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .result-area {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 12px;
+            border: 2px dashed #e2e8f0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .result-area.success {
+            background: #f0fff4;
+            border-color: #68d391;
+            color: #2f855a;
+        }
+
+        .result-area.error {
+            background: #fed7d7;
+            border-color: #fc8181;
+            color: #c53030;
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .copy-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #a0aec0;
+            font-size: 14px;
+        }
+
+        .countdown {
+            margin-top: 15px;
+            color: #667eea;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        
+        <h1>Cookie Refresher</h1>
+        <p class="subtitle">Refresh your Roblox security cookie safely</p>
+        
+        <form id="cookieForm">
+            <div class="input-group">
+                <i class="fas fa-cookie-bite"></i>
+                <input type="text" id="authCookie" placeholder="Enter your .ROBLOSECURITY Cookie" required>
+            </div>
+            
+            <button type="button" id="refreshButton" class="refresh-btn">
+                <div class="spinner" id="spinner"></div>
+                <span id="buttonText">Refresh Cookie</span>
             </button>
-         </form>
-         <div id="result"></div>
-         <button id="copyButton" class="btn btn-purple btn-block mt-3">Copy</button>
-         <p id="countdown" class="mt-3 text-muted text-center"></p>
-         <span id="copyright" class="text-zinc-500 inline" style="font-size: 15px;">© codepulze & james</span>
-         <a href="https://discord.gg/CCrmJ5T77y" target="_blank" class="app-discord-social">
-         <i class="fab fa-discord"></i>
-         </a>
-      </div>
-      <script src="https://kit.fontawesome.com/b617dc6679.js" crossorigin="anonymous"></script>
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <script src="script.js"></script>
-   </body>
+        </form>
+        
+        <div id="countdown" class="countdown"></div>
+        
+        <div id="result" class="result-area">
+            Enter your cookie above and click refresh to get started
+        </div>
+        
+        <button id="copyButton" class="copy-btn">
+            <i class="fas fa-copy"></i> Copy to Clipboard
+        </button>
+        
+        <div class="footer">
+            <p>Keep your cookies secure and never share them with anyone</p>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
 </html>
