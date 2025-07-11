@@ -1,3 +1,4 @@
+
 const express = require('express');
 const path = require('path');
 
@@ -6,9 +7,6 @@ const { generateAuthTicket, redeemAuthTicket } = require('./refresh');
 const app = express();
 app.use(express.json());
 app.use(express.static(__dirname));
-
-
-
 
 // Input validation middleware
 const validateCookie = (req, res, next) => {
